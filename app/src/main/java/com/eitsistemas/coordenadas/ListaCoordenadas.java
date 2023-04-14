@@ -3,6 +3,7 @@ package com.eitsistemas.coordenadas;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
@@ -37,4 +38,10 @@ public class ListaCoordenadas extends AppCompatActivity {
             }
         }
     }
+
+//    public Cursor getListaContenidos(){
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        Cursor data = db.rawQuery("SELECT * FROM "+ TABLE_NOMBRE,null);
+//        return data;
+//    }
 }
