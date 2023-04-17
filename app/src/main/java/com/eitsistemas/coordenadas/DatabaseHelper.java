@@ -13,6 +13,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_NOMBRE = "SQLiteGPS";
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_DIRECCION = "direccion";
+    public static final String COLUMN_LATITUD = "latitud";
+    public static final String COLUMN_LONGITUD = "longitud";
+
     public DatabaseHelper(@Nullable Context context) {
         super(context, TABLE_NOMBRE, null, BD_version);
     }
@@ -21,7 +24,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
           String sql = " CREATE TABLE " + TABLE_NOMBRE
                   + "(" + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
-                  + COLUMN_DIRECCION + " VARCHAR) ";
+                  + COLUMN_DIRECCION + " VARCHAR,"
+                  + COLUMN_LATITUD + " VARCHAR,"
+                  + COLUMN_LONGITUD + " VARCHAR)";
           db.execSQL(sql);
     }
 
@@ -32,10 +37,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
        onCreate(db);
     }
 
-    public Boolean addData(String insertar){
+    public Boolean addData(String direccion,String latitud, String longitud){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_DIRECCION,insertar);
+        contentValues.put(COLUMN_DIRECCION,direccion);
+        contentValues.put(COLUMN_LATITUD,latitud);
+        contentValues.put(COLUMN_LONGITUD,longitud);
+
         long result = db.insert(TABLE_NOMBRE, null, contentValues);
         if(result == -1){
             return false;

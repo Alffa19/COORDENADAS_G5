@@ -29,8 +29,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
-    TextView tdireccion;
-    TextView mensaje2;
+    TextView tdireccion,tdlatitud,tdlongitud;
     Button   bGuardar;
     DatabaseHelper miBD;
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -40,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //mensaje2 = (TextView) findViewById(R.id.mensaje_id2);
         tdireccion = (TextView) findViewById(R.id.txtdireccion);
+        tdlatitud = (TextView) findViewById(R.id.txtlatitud);
+        tdlongitud = (TextView) findViewById(R.id.txtlongitud);
+
         bGuardar = (Button) findViewById(R.id.btnagregar);
 
 
@@ -54,9 +56,13 @@ public class MainActivity extends AppCompatActivity {
         bGuardar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String datosDireccion = tdireccion.getText().toString();
+
+                String Direccion = tdireccion.getText().toString();
+                String Latitud = tdlatitud.getText().toString();
+                String Longitud = tdlongitud.getText().toString();
+
                 if(tdireccion.length()!=0){
-                    agregar(datosDireccion);
+                    agregar(Direccion,Latitud,Longitud);
                 }else{
                    Toast.makeText(MainActivity.this, "Ingresa algo",Toast.LENGTH_LONG).show();
                 }
@@ -64,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void agregar(String nuevaEntrada){
-        boolean insertarData = miBD.addData(nuevaEntrada);
+    public void agregar(String dir,String lat, String lon){
+        boolean insertarData = miBD.addData(dir,lat,lon);
         if(insertarData == true){
             Toast.makeText(this,"Datos insertados correctamente", Toast.LENGTH_LONG).show();
         }else {
@@ -110,8 +116,9 @@ public class MainActivity extends AppCompatActivity {
                         loc.getLatitude(), loc.getLongitude(), 1);
                 if (!list.isEmpty()) {
                     Address DirCalle = list.get(0);
-                    tdireccion.setText("Mi direccion es:"
-                            + DirCalle.getAddressLine(0) + "\n Longitud" + loc.getLongitude()+ "\n Latitud" + loc.getLatitude());
+                    tdireccion.setText("Mi direccion es:"+DirCalle.getAddressLine(0));
+                    tdlatitud.setText(""+loc.getLatitude());
+                    tdlongitud.setText(""+loc.getLongitude());
                 }
             } catch (IOException e) {
                 e.printStackTrace();
